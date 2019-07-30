@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=development ts-node src/index.ts"
+    "start": "NODE_ENV=development ts-node src/index.development.ts",
+    "production": "ts-node src/index.production.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",

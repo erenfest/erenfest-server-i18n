@@ -5,17 +5,11 @@ dotenv.config()
 import Chalk from 'chalk'
 import Inquirer from 'inquirer'
 import glob from 'glob'
-import Express from 'express'
-import CORS from 'cors'
 
+import { server } from './server'
 import { languages } from './languages'
 
-const app = Express()
-
-app.use(CORS())
-app.use(Express.static('i18n'))
-
-app.listen(process.env.PORT, async () => {
+server.listen(process.env.PORT, async () => {
   console.clear()
   console.log(Chalk`{green Compiled successfully!}\n`)
   console.log(Chalk`You can now view {bold erenfest-server-i18n} in the browser\n`)
