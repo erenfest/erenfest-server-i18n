@@ -16,7 +16,7 @@ server.listen(process.env.PORT, async () => {
   console.log(Chalk`  {bold Local}: http://localhost:${process.env.PORT!}/\n`)
 
   while (true) {
-    await Inquirer.prompt({
+    const { language } = await Inquirer.prompt({
       name: 'language',
       message: 'Which language will you check?',
       type: 'list',
@@ -25,14 +25,13 @@ server.listen(process.env.PORT, async () => {
         .map(directory => directory.slice(5, -1))
         .filter(languages.hasCode)
         .map<string>(languages.toName as any)
-    }).then(async ({ language }: any) => {
-      const fileNameList = glob.sync(`i18n/${languages.toCode(language)}/**/*.json`, { nodir: true, nounique: true })
-
-      console.log(Chalk`\n${language} has {bold ${fileNameList.length.toString()}} translations\n`)
-
-      if (fileNameList.length) {
-        fileNameList.forEach(fileName => console.log(`- http://localhost:${process.env.PORT}/${fileName.slice(5)}\n`))
-      }
     })
+    const fileNameList = glob.sync(`i18n/${languages.toCode(language)}/**/*.json`, { nodir: true, nounique: true })
+    console.log(Chalk`\n${language} has {bold ${fileNameList.length.toString()}} translations\n`)
+
+    const hasTranslation = !!fileNameList.length
+    if (hasTranslation) {
+      fileNameList.forEach(fileName => console.log(`- http://localhost:${process.env.PORT}/${fileName.slice(5)}\n`))
+    }
   }
 })
