@@ -16,15 +16,17 @@ server.listen(process.env.PORT, async () => {
   console.log(Chalk`  {bold Local}: http://localhost:${process.env.PORT!}/\n`)
 
   while (true) {
+    const ROOT = 'i18n'
+    const languageList = glob
+      .sync(`${ROOT}/*/`)
+      .map(directory => directory.slice(ROOT.length + 1, -1))
+      .filter(languages.hasCode)
+      .map<string>(languages.toName as any)
     const { language } = await Inquirer.prompt({
       name: 'language',
       message: 'Which language will you check?',
       type: 'list',
-      choices: glob
-        .sync('i18n/*/')
-        .map(directory => directory.slice(5, -1))
-        .filter(languages.hasCode)
-        .map<string>(languages.toName as any)
+      choices: languageList
     })
     const fileNameList = glob.sync(`i18n/${languages.toCode(language)}/**/*.json`, { nodir: true, nounique: true })
     console.log(Chalk`\n${language} has {bold ${fileNameList.length.toString()}} translations\n`)
