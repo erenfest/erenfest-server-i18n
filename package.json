@@ -3,8 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=development ts-node src/index.development.ts",
-    "production": "ts-node src/index.production.ts"
+    "start": "yarn local",
+    "local": "ts-node src/index.local.ts",
+    "development": "ts-node src/index.development.ts",
+    "production": "ts-node src/index.production.ts",
+    "cli": "ts-node cli/index.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",

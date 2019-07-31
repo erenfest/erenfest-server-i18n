@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
 
-dotenv.config({ path: '.env.development' })
+dotenv.config({ path: '.env.local' })
 
 import Chalk from 'chalk'
 
